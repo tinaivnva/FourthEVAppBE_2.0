@@ -18,36 +18,33 @@ namespace TravelEasy.EV.API.Controllers
         {
             _EVContext = EVContext;
         }
-        // GET: api/<CarsController>
-        [HttpGet($"Car{Id}")]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
+       
         // GET api/<CarsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult<CarDetailResponceModel> Get(int id, [System.Web.Http.FromUri] int userId)
         {
-            return "value";
-        }
-
-        // POST api/<CarsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CarsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CarsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            // Check if user exists
+            if (!_EVContext.Users.Where(u => u.Id == userId).Any())
+            {
+                return Unauthorized();
+            }
+            ElectricVehicle? ev = _EVContext.ElectricVehicles.Where(ev => ev.Id == id).FirstOrDefault();
+            if (ev == null)
+            {
+                return NotFound();
+            }
+            CarDetailResponceModel result = new()
+            {
+                Brand = ev.Brand,
+                Model = ev.Model,
+                HorsePowers = ev.HorsePowers,
+                Range = ev.Range,
+                PricePerDay = ev.PricePerDay
+            };
+            return Ok(result);
         }
     }
 }
