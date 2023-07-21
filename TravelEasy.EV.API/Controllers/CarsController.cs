@@ -9,7 +9,7 @@ namespace TravelEasy.EV.API.Controllers
     public class CarsController : ControllerBase
     {
         // GET: api/<CarsController>
-        [HttpGet]
+        [HttpGet ("All cars")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
