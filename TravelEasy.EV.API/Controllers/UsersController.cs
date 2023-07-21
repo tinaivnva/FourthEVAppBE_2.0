@@ -32,7 +32,7 @@ namespace TravelEasy.EV.API.Controllers
             var user = _EVContext.Users.Find(id);
             return user == null ? NotFound(user) : Ok(user);
         }
-        [HttpPost]
+        [HttpPost("LogIn")]
         public IActionResult Login([FromBody] UserLoginRequestModel model)
         {
             var user = _EVContext.Users.FirstOrDefault(u => u.Username == model.Username);
@@ -51,6 +51,11 @@ namespace TravelEasy.EV.API.Controllers
         [HttpPost("Register")]
         public IActionResult Register([FromBody] UserRegisterRequestModel model)
         {
+            User? existingUser = _EVContext.Users.Where(u => u.Username == model.Username).FirstOrDefault();
+            if (existingUser != null)
+            {
+                return BadRequest("User already exists");
+            }
             User user = new();
             user.Username = model.Username;
             user.Email = model.Email;
@@ -58,7 +63,9 @@ namespace TravelEasy.EV.API.Controllers
             _EVContext.Users.Add(user);
             _EVContext.SaveChanges();
             return Created(nameof(UsersController), user.Id);
+            
         }
+
         //public IActionResult Delete(int id)
         //{
         //    var user = _EVContext.Users.Find(id);
