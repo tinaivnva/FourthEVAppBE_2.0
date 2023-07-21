@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using TravelEasy.ElectricVehicles.DB.Models;
+using TravelEasy.EV.API.Models.CarModels;
+using TravelEasy.EV.DataLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +12,33 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
+        
+        private readonly ElectricVehiclesContext _EVContext;
+        
+        public CarsController(ElectricVehiclesContext EVContext)
+        {
+            _EVContext = EVContext;
+        }
         // GET: api/<CarsController>
-        [HttpGet ("All cars")]
-        public IEnumerable<string> Get()
+        [HttpGet]
+        public IActionResult GetAllCars()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<CarsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<CarsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CarsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CarsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var list = _EVContext.ElectricVehicles;
+            var allCars = new List<CarResponseModel>();
+            if (allCars.Count == 0) 
+            {
+                return Ok("No available cars");
+            }
+            foreach (var car in list) 
+            {
+                CarResponseModel carModel = new CarResponseModel();
+                carModel.Brand = car.Brand;
+                carModel.Model = car.Model;
+                carModel.Price = car.PricePerDay;
+                allCars.Add(carModel);
+            }
+            
+            return Ok(allCars);
         }
     }
 }
