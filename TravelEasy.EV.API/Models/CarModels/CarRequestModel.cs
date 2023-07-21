@@ -2,5 +2,6 @@
 {
     public class CarRequestModel
     {
+        public int Id { get; set; }
     }
 }
