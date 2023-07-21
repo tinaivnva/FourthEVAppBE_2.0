@@ -21,4 +21,8 @@
     <ProjectReference Include="..\TravelEasy.EV.DataLayer\TravelEasy.EV.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\CarModels\" />
+  </ItemGroup>
+
 </Project>
