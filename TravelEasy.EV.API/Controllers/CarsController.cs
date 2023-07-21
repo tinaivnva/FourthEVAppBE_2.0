@@ -13,12 +13,35 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
+        
         private readonly ElectricVehiclesContext _EVContext;
+        
         public CarsController(ElectricVehiclesContext EVContext)
         {
             _EVContext = EVContext;
         }
-       
+        // GET: api/<CarsController>
+        [HttpGet]
+        public IActionResult GetAllCars()
+        {
+            var list = _EVContext.ElectricVehicles;
+            var allCars = new List<CarResponseModel>();
+            if (allCars.Count == 0) 
+            {
+                return Ok("No available cars");
+            }
+            foreach (var car in list) 
+            {
+                CarResponseModel carModel = new CarResponseModel();
+                carModel.Brand = car.Brand;
+                carModel.Model = car.Model;
+                carModel.Price = car.PricePerDay;
+                allCars.Add(carModel);
+            }
+            
+            return Ok(allCars);
+        }
+
         // GET api/<CarsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
