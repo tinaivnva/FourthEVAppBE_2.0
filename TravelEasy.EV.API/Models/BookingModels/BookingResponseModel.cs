@@ -2,6 +2,6 @@
 {
     public class BookingResponseModel
     {
-        
+        public bool IsBooked { get; set; }
     }
 }

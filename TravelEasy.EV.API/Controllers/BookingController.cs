@@ -8,5 +8,6 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class BookingController : ControllerBase
     {
+        private readonly ;
     }
 }
