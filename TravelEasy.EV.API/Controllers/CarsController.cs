@@ -49,6 +49,7 @@ namespace TravelEasy.EV.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<CarDetailResponceModel> Get(int id, [System.Web.Http.FromUri] int userId)
         {
+
             // Check if user exists
             if (!_EVContext.Users.Where(u => u.Id == userId).Any())
             {
@@ -68,6 +69,35 @@ namespace TravelEasy.EV.API.Controllers
                 PricePerDay = ev.PricePerDay
             };
             return Ok(result);
+        }
+        [HttpGet("available")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult<ICollection<CarResponseModel>> GetAvailable([System.Web.Http.FromUri] int userId)
+        {
+            // Check if user exists
+            if (!_EVContext.Users.Where(u => u.Id == userId).Any())
+            {
+                return Unauthorized();
+            }
+            var vehicles = _EVContext.ElectricVehicles.Where(ev => !ev.IsBooked);
+            if (!vehicles.Any())
+            {
+                return Ok("No free EVs in database");
+            }
+            ICollection<CarResponseModel> models = new List<CarResponseModel>();
+            foreach (var vehicle in vehicles)
+            {
+                CarResponseModel newModel = new()
+                {
+                    Brand = vehicle.Brand,
+                    Model = vehicle.Model,
+                    Price = vehicle.PricePerDay
+                };
+                models.Add(newModel);
+            }
+            return Ok(models);
         }
     }
 }
