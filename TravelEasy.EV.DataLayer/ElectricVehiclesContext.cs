@@ -23,6 +23,8 @@ namespace TravelEasy.EV.DataLayer
                     eb.HasNoKey();
                 });
             base.OnModelCreating(modelBuilder);
+
         }
+
     }
 }
