@@ -8,6 +8,9 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class BookingController : ControllerBase
     {
-        
-    }
+        /*[HttpPut("BookACar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]*/
+    }       
 }
