@@ -32,7 +32,7 @@ namespace TravelEasy.EV.API.Controllers
             var user = _EVContext.Users.Find(id);
             return user == null ? NotFound(user) : Ok(user);
         }
-        [HttpPost]
+        [HttpPost("log-in")]
         public IActionResult Login([FromBody] UserLoginRequestModel model)
         {
             var user = _EVContext.Users.FirstOrDefault(u => u.Username == model.Username);
@@ -48,7 +48,7 @@ namespace TravelEasy.EV.API.Controllers
 
         }
         // PUT api/<UsersController>/5
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public IActionResult Register([FromBody] UserRegisterRequestModel model)
         {
             User user = new();
