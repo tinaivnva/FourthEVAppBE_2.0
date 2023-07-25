@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.API.Models.BookingModels;
-using TravelEasy.EV.API.Models.UserModels;
 using TravelEasy.EV.DataLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,22 +16,19 @@ namespace TravelEasy.EV.API.Controllers
         {
             _EVContext = EVContext;
         }
-        [HttpPut("book-a-car")]
+        /*
+         * [HttpPut("book-a-car")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Booking([FromBody] BookingRequestModel model)
+        /*public IActionResult Booking([FromBody] BookingRequestModel model)
         {
             if (!_EVContext.Users.Where(u => u.Id == userId).Any())
             {
                 return Unauthorized();
             }
-            if (!_EVContext.Users.Where(u => u.Id == userId).Any())
-            {
-                return Unauthorized();
-            }
         }
-        /* [HttpPut("book-a-car")]
+         [HttpPut("book-a-car")]
          [ProducesResponseType(StatusCodes.Status200OK)]
          [ProducesResponseType(StatusCodes.Status404NotFound)]
          [ProducesResponseType(StatusCodes.Status401Unauthorized)]
