@@ -20,31 +20,7 @@ namespace TravelEasy.EV.API.Controllers
         {
             _EVContext = EVContext;
         }
-        // GET: api/<CarsController>
-        [HttpGet]
-        public IActionResult GetAllCars()
-        {
-            var list = _EVContext.ElectricVehicles;
-            var allCars = new List<CarResponseModel>();
-            if (allCars.Count == 0) 
-            {
-                return Ok("No available cars");
-            }
-            foreach (var car in list) 
-            {
-                CarResponseModel carModel = new CarResponseModel();
-                carModel.Brand = car.Brand;
-                carModel.Model = car.Model;
-                carModel.Price = car.PricePerDay;
-                carModel.Image = car.Image;
-                carModel.Category = car.Category;
-                allCars.Add(carModel);
-            }
-            
-            return Ok(allCars);
-        }
 
-        // GET api/<CarsController>/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -73,23 +49,21 @@ namespace TravelEasy.EV.API.Controllers
                 Category = ev.Category
             };
             return Ok(result);
-        }
-        /*[HttpGet("available")]
+        } 
+
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<ICollection<CarResponseModel>> GetAvailable([System.Web.Http.FromUri] int userId)
+        public ActionResult<ICollection<CarResponseModel>> GetAll([System.Web.Http.FromUri] int userId)
         {
+            var vehicles = _EVContext.ElectricVehicles;
             // Check if user exists
             if (!_EVContext.Users.Where(u => u.Id == userId).Any())
             {
                 return Unauthorized();
             }
-            var vehicles = _EVContext.ElectricVehicles.Where(ev => !ev.IsBooked);
-            if (!vehicles.Any())
-            {
-                return Ok("No free EVs in database");
-            }
+            
             ICollection<CarResponseModel> models = new List<CarResponseModel>();
             foreach (var vehicle in vehicles)
             {
@@ -97,11 +71,13 @@ namespace TravelEasy.EV.API.Controllers
                 {
                     Brand = vehicle.Brand,
                     Model = vehicle.Model,
-                    Price = vehicle.PricePerDay
+                    Price = vehicle.PricePerDay,
+                    Image = vehicle.Image,
+                    Category = vehicle.Category
                 };
                 models.Add(newModel);
             }
             return Ok(models);
-        }*/
+        }
     }
 }
