@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TravelEasy.ElectricVehicles.DB.Models;
 using Microsoft.AspNetCore.Identity;
 using TravelEasy.EV.API.Models.CarModels;
+using System.Drawing;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,7 +14,6 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        
         private readonly ElectricVehiclesContext _EVContext;
         
         public CarsController(ElectricVehiclesContext EVContext)
