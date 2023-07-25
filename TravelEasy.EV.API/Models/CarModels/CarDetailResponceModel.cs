@@ -11,5 +11,7 @@
         public int Range { get; set; }
 
         public decimal PricePerDay { get; set; }
+        public string Image { get; set; }
+        public string Category { get; set; }
     }
 }

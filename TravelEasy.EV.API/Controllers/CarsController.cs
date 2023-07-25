@@ -36,6 +36,8 @@ namespace TravelEasy.EV.API.Controllers
                 carModel.Brand = car.Brand;
                 carModel.Model = car.Model;
                 carModel.Price = car.PricePerDay;
+                carModel.Image = car.Image;
+                carModel.Category = car.Category;
                 allCars.Add(carModel);
             }
             
@@ -55,7 +57,7 @@ namespace TravelEasy.EV.API.Controllers
             {
                 return Unauthorized();
             }
-            ElectricVehicle? ev = _EVContext.ElectricVehicles.Where(ev => ev.Id == id).FirstOrDefault();
+            ElectricVehicle? ev = _EVContext.ElectricVehicles.Where(ev => ev.CarId == id).FirstOrDefault();
             if (ev == null)
             {
                 return NotFound();
@@ -66,11 +68,13 @@ namespace TravelEasy.EV.API.Controllers
                 Model = ev.Model,
                 HorsePowers = ev.HorsePowers,
                 Range = ev.Range,
-                PricePerDay = ev.PricePerDay
+                PricePerDay = ev.PricePerDay,
+                Image = ev.Image,
+                Category = ev.Category
             };
             return Ok(result);
         }
-        [HttpGet("available")]
+        /*[HttpGet("available")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -98,6 +102,6 @@ namespace TravelEasy.EV.API.Controllers
                 models.Add(newModel);
             }
             return Ok(models);
-        }
+        }*/
     }
 }
