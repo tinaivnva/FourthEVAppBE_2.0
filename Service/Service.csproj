@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="TravelEasy.EV.DB.ModelsBensin" Version="1.0.4" />
+  </ItemGroup>
+
 </Project>
