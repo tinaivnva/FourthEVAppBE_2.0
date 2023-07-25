@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.DataLayer;
-using Microsoft.AspNetCore.Identity;
 using TravelEasy.EV.API.Models.UserModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -46,11 +44,5 @@ namespace TravelEasy.EV.API.Controllers
             _EVContext.SaveChanges();
             return Created(nameof(UsersController), user.Id);
         }
-        //public IActionResult Delete(int id)
-        //{
-        //    var user = _EVContext.Users.Find(id);
-        //    _EVContext.Users.Remove(user);
-        //    return Ok();
-        //}
     }
 }
