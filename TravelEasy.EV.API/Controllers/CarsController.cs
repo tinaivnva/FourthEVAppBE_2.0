@@ -49,7 +49,7 @@ namespace TravelEasy.EV.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<CarDetailResponceModel> Get(int id, [System.Web.Http.FromUri] int userId)
+        public ActionResult<CarDetailResponseModel> Get(int id, [System.Web.Http.FromUri] int userId)
         {
 
             // Check if user exists
@@ -62,7 +62,7 @@ namespace TravelEasy.EV.API.Controllers
             {
                 return NotFound();
             }
-            CarDetailResponceModel result = new()
+            CarDetailResponseModel result = new()
             {
                 Brand = ev.Brand,
                 Model = ev.Model,
