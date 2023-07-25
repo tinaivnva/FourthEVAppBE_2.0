@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace TravelEasy.EV.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/cars")]
     [ApiController]
     public class CarsController : ControllerBase
     {

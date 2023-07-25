@@ -19,20 +19,7 @@ namespace TravelEasy.EV.API.Controllers
             _EVContext = EVContext;
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            var register = new UserRegisterRequestModel();
-            return Ok();
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult Login(int id)
-        {
-            var user = _EVContext.Users.Find(id);
-            return user == null ? NotFound(user) : Ok(user);
-        }
-        [HttpPost("log-in")]
+        [HttpPost("login")]
         public IActionResult Login([FromBody] UserLoginRequestModel model)
         {
             var user = _EVContext.Users.FirstOrDefault(u => u.Username == model.Username);
