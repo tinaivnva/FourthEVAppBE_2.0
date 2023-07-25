@@ -9,7 +9,7 @@ using TravelEasy.EV.API.Models.UserModels;
 
 namespace TravelEasy.EV.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
