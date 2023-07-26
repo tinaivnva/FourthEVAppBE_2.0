@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelEasy.EV.DataLayer;
 using TravelEasy.ElectricVehicles.DB.Models;
+using TravelEasy.EV.API.Models;
+using Service.Cars;
+using Service.Cars.Interfaces;
 using TravelEasy.EV.API.Models.CarModels;
 using Service;
 
@@ -12,20 +14,22 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly ElectricVehiclesContext _EVContext;
+        private readonly ICarsService _carsService;
+         private readonly ElectricVehiclesContext _EVContext;
         private readonly IUserService _userService;
 
-        public CarsController(ElectricVehiclesContext EVContext, IUserService userService)
+        public CarsController(ElectricVehiclesContext EVContext, IUserService userService,ICarsService carsService)
         {
             _EVContext = EVContext;
             _userService = userService;
+            _carsService = carsService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<CarDetailResponseModel> Get(int id, [System.Web.Http.FromUri] int userId)
+        public IActionResult GetAll()
         {
             // Check if user exists
             if (!_userService.checkIfUserExists(userId))
@@ -33,8 +37,33 @@ namespace TravelEasy.EV.API.Controllers
                 return Unauthorized();
             }
 
-            ElectricVehicle? ev = _EVContext.ElectricVehicles.Where(ev => ev.CarId == id).FirstOrDefault();
+            var models = new List<ElectricVehicle>();
+            var vehicles = _carsService.GetAll();
 
+            foreach (var vehicle in vehicles)
+            {
+                ElectricVehicle newModel = new()
+                {
+                    Brand = vehicle.Brand,
+                    Model = vehicle.Model,
+                    PricePerDay = vehicle.PricePerDay,
+                    Image = vehicle.Image,
+                    Category = vehicle.Category,
+                };
+                models.Add(newModel);
+            }
+
+            return Ok(models);
+        }
+
+        [HttpGet()]
+        [Route("{CarId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult CarDetailResponceModel(int id, [System.Web.Http.FromUri] int CarId)
+        {
+            ElectricVehicle? ev = _carsService.GetByID(CarId);
             if (ev == null)
             {
                 return NotFound();
@@ -51,39 +80,7 @@ namespace TravelEasy.EV.API.Controllers
                 Category = ev.Category
             };
 
-            return Ok(result);
-        } 
-
-        [HttpGet()]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<ICollection<CarResponseModel>> GetAll([System.Web.Http.FromUri] int userId)
-        {
-            var vehicles = _EVContext.ElectricVehicles;
-
-            // Check if user exists
-            if (!_userService.checkIfUserExists(userId))
-            {
-                return Unauthorized();
-            }
-
-            ICollection<CarResponseModel> models = new List<CarResponseModel>();
-
-            foreach (var vehicle in vehicles)
-            {
-                CarResponseModel newModel = new()
-                {
-                    Brand = vehicle.Brand,
-                    Model = vehicle.Model,
-                    Price = vehicle.PricePerDay,
-                    Image = vehicle.Image,
-                    Category = vehicle.Category
-                };
-                models.Add(newModel);
-            }
-
-            return Ok(models);
+            return Ok(result);      
         }
     }
 }

@@ -20,8 +20,10 @@ namespace TravelEasy.EV.API.Controllers
             _EVContext = EVContext;
             _userService = userService;
         }
+        
         //users booked cars
         [HttpPut("book-a-car")]
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
