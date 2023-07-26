@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.API.Models.UserModels;
-using Service;
+using Service.user;
 
 namespace TravelEasy.EV.API.Controllers
 {

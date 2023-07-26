@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.DataLayer;
 
-namespace Service
+namespace Service.user
 {
     public class UserService : IUserService
     {

@@ -3,7 +3,7 @@ using TravelEasy.ElectricVehicles.DB.Models;
 using Service.Cars;
 using Service.Cars.Interfaces;
 using TravelEasy.EV.API.Models.CarModels;
-using Service;
+using Service.user;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,12 +22,17 @@ namespace TravelEasy.EV.API.Controllers
             _carsService = carsService;
         }
 
-        [HttpGet()]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult CarResponseModel()
-        { 
+        public IActionResult CarResponseModel(int userId)
+        {
+            if (!_userService.checkIfUserExists(userId))
+            {
+                return Unauthorized();
+            }
+
             var models = new List<ElectricVehicle>();
             var vehicles = _carsService.GetAll();
 
@@ -47,14 +52,20 @@ namespace TravelEasy.EV.API.Controllers
             return Ok(models);
         }
 
-        [HttpGet()]
-        [Route("{CarId}")]
+        [HttpGet]
+        [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult CarDetailResponce(int id, [System.Web.Http.FromUri] int CarId)
+        public ActionResult CarDetailResponce(int id, [System.Web.Http.FromUri] int userId)
         {
-            ElectricVehicle? ev = _carsService.GetByID(CarId);
+            if (!_userService.checkIfUserExists(userId))
+            {
+                return Unauthorized();
+            }
+
+            ElectricVehicle? ev = _carsService.GetByID(id);
+
             if (ev == null)
             {
                 return NotFound();

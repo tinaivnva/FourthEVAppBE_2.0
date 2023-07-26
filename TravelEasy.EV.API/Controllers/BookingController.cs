@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Service;
+using Service.user;
 using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.API.Models.BookingModels;
 using TravelEasy.EV.API.Models.UserModels;

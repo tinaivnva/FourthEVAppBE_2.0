@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TravelEasy.ElectricVehicles.DB.Models;
 
-namespace Service
+namespace Service.user
 {
     public interface IUserService
     {
-        public bool checkIfUserExists (int userId);
-        public void SaveUserInDB (User user);
-        public User GetUserByUsername (string username);
+        public bool checkIfUserExists(int userId);
+        public void SaveUserInDB(User user);
+        public User GetUserByUsername(string username);
     }
 }
