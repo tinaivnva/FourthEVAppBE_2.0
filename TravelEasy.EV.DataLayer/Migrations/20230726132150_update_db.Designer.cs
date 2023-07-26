@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelEasy.EV.DataLayer;
 
@@ -11,9 +12,11 @@ using TravelEasy.EV.DataLayer;
 namespace TravelEasy.EV.DataLayer.Migrations
 {
     [DbContext(typeof(ElectricVehiclesContext))]
-    partial class ElectricVehiclesContextModelSnapshot : ModelSnapshot
+    [Migration("20230726132150_update_db")]
+    partial class update_db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,19 +48,6 @@ namespace TravelEasy.EV.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Booking");
-                });
-
-            modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.Category", b =>
-                {
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryName");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.ElectricVehicle", b =>

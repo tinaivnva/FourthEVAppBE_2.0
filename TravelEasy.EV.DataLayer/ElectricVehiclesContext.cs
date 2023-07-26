@@ -9,22 +9,11 @@ namespace TravelEasy.EV.DataLayer
         public DbSet<Booking> Booking { get; set;}
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public ElectricVehiclesContext(DbContextOptions<ElectricVehiclesContext> options)
            : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<Booking>(
-                eb =>
-                {
-                    eb.HasNoKey();
-                });
-            base.OnModelCreating(modelBuilder);
-
-        }
-
     }
 }
