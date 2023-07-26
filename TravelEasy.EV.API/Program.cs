@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Service;
 using Service.Cars;
 using Service.Cars.Interfaces;
 using TravelEasy.EV.DataLayer;

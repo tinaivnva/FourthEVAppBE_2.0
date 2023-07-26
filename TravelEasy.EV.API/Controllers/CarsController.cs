@@ -15,12 +15,10 @@ namespace TravelEasy.EV.API.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarsService _carsService;
-         private readonly ElectricVehiclesContext _EVContext;
         private readonly IUserService _userService;
 
-        public CarsController(ElectricVehiclesContext EVContext, IUserService userService,ICarsService carsService)
+        public CarsController(IUserService userService,ICarsService carsService)
         {
-            _EVContext = EVContext;
             _userService = userService;
             _carsService = carsService;
         }
@@ -31,11 +29,11 @@ namespace TravelEasy.EV.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetAll()
         {
-            // Check if user exists
-            if (!_userService.checkIfUserExists(userId))
-            {
-                return Unauthorized();
-            }
+            //// Check if user exists
+            //if (!_userService.checkIfUserExists(userId))
+            //{
+            //    return Unauthorized();
+            //}
 
             var models = new List<ElectricVehicle>();
             var vehicles = _carsService.GetAll();
