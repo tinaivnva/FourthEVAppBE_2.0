@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelEasy.ElectricVehicles.DB.Models;
-using TravelEasy.EV.API.Models;
 using Service.Cars;
 using Service.Cars.Interfaces;
 using TravelEasy.EV.API.Models.CarModels;
@@ -27,14 +26,8 @@ namespace TravelEasy.EV.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult GetAll()
-        {
-            //// Check if user exists
-            //if (!_userService.checkIfUserExists(userId))
-            //{
-            //    return Unauthorized();
-            //}
-
+        public IActionResult CarResponseModel()
+        { 
             var models = new List<ElectricVehicle>();
             var vehicles = _carsService.GetAll();
 
@@ -59,7 +52,7 @@ namespace TravelEasy.EV.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult CarDetailResponceModel(int id, [System.Web.Http.FromUri] int CarId)
+        public ActionResult CarDetailResponce(int id, [System.Web.Http.FromUri] int CarId)
         {
             ElectricVehicle? ev = _carsService.GetByID(CarId);
             if (ev == null)
