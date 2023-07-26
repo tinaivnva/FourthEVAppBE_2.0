@@ -15,5 +15,6 @@ namespace TravelEasy.EV.DataLayer
            : base(options)
         {
         }
+
     }
 }
