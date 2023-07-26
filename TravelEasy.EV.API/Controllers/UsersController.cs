@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelEasy.ElectricVehicles.DB.Models;
-using TravelEasy.EV.DataLayer;
 using TravelEasy.EV.API.Models.UserModels;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Service;
 
 namespace TravelEasy.EV.API.Controllers
 {
@@ -11,37 +9,45 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ElectricVehiclesContext _EVContext;
-        public UsersController(ElectricVehiclesContext EVContext)
-        {
-            _EVContext = EVContext;
+        private readonly IUserService _userService;
+        public UsersController(IUserService userService)
+        {        
+            _userService = userService;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
+        [Route("login")]
         public IActionResult Login([FromBody] UserLoginRequestModel model)
         {
-            var user = _EVContext.Users.FirstOrDefault(u => u.Username == model.Username);
+            var user = _userService.GetUserByUsername(model.Username);
+
             if (user == null)
             {
                 return BadRequest();
             }
+
             if (model.Password != user.Password)
             {
                 return BadRequest();
             }
+
             return Ok(user.Id);
 
         }
-        // PUT api/<UsersController>/5
-        [HttpPost("register")]
+
+        [HttpPost]
+        [Route("register")]
         public IActionResult Register([FromBody] UserRegisterRequestModel model)
         {
-            User user = new();
-            user.Username = model.Username;
-            user.Email = model.Email;
-            user.Password = model.Password;
-            _EVContext.Users.Add(user);
-            _EVContext.SaveChanges();
+            User user = new()
+            {
+                Username = model.Username,
+                Email = model.Email,
+                Password = model.Password
+            };
+
+            _userService.SaveUserInDB(user);
+
             return Created(nameof(UsersController), user.Id);
         }
     }

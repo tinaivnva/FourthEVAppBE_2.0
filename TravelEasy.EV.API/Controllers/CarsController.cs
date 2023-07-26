@@ -4,6 +4,7 @@ using TravelEasy.EV.API.Models;
 using Service.Cars;
 using Service.Cars.Interfaces;
 using TravelEasy.EV.API.Models.CarModels;
+using Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,8 +15,13 @@ namespace TravelEasy.EV.API.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarsService _carsService;
-        public CarsController(ICarsService carsService)
+         private readonly ElectricVehiclesContext _EVContext;
+        private readonly IUserService _userService;
+
+        public CarsController(ElectricVehiclesContext EVContext, IUserService userService,ICarsService carsService)
         {
+            _EVContext = EVContext;
+            _userService = userService;
             _carsService = carsService;
         }
 
@@ -25,10 +31,11 @@ namespace TravelEasy.EV.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetAll()
         {
-            /*if (!_userService.UserExists(userId))
+            // Check if user exists
+            if (!_userService.checkIfUserExists(userId))
             {
                 return Unauthorized();
-            }*/
+            }
 
             var models = new List<ElectricVehicle>();
             var vehicles = _carsService.GetAll();
@@ -61,7 +68,8 @@ namespace TravelEasy.EV.API.Controllers
             {
                 return NotFound();
             }
-            CarDetailResponceModel result = new()
+
+            CarDetailResponseModel result = new()
             {
                 Brand = ev.Brand,
                 Model = ev.Model,
@@ -71,8 +79,8 @@ namespace TravelEasy.EV.API.Controllers
                 Image = ev.Image,
                 Category = ev.Category
             };
-            return Ok(result);
 
+            return Ok(result);      
         }
     }
 }
