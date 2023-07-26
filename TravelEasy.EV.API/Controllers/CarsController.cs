@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelEasy.EV.DataLayer;
 using TravelEasy.ElectricVehicles.DB.Models;
-using TravelEasy.EV.API.Models.CarModels;
+using TravelEasy.EV.API.Models;
 using Service.Cars;
 using Service.Cars.Interfaces;
+using TravelEasy.EV.API.Models.CarModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,78 +13,66 @@ namespace TravelEasy.EV.API.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly IGetAllCarsService getAllCarsService;
-        public CarsController(IGetAllCarsService getAllCarsService)
+        private readonly ICarsService _carsService;
+        public CarsController(ICarsService carsService)
         {
-            this.getAllCarsService = getAllCarsService;
+            _carsService = carsService;
         }
 
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult GetAll(IGetAllCarsService getAllCarsService)
+        public IActionResult GetAll()
         {
-            var models = getAllCarsService.GetAll();
-            return models;
+            /*if (!_userService.UserExists(userId))
+            {
+                return Unauthorized();
+            }*/
+
+            var models = new List<ElectricVehicle>();
+            var vehicles = _carsService.GetAll();
+
+            foreach (var vehicle in vehicles)
+            {
+                ElectricVehicle newModel = new()
+                {
+                    Brand = vehicle.Brand,
+                    Model = vehicle.Model,
+                    PricePerDay = vehicle.PricePerDay,
+                    Image = vehicle.Image,
+                    Category = vehicle.Category,
+                };
+                models.Add(newModel);
+            }
+
+            return Ok(models);
+        }
+
+        [HttpGet()]
+        [Route("{CarId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult CarDetailResponceModel(int id, [System.Web.Http.FromUri] int CarId)
+        {
+            ElectricVehicle? ev = _carsService.GetByID(CarId);
+            if (ev == null)
+            {
+                return NotFound();
+            }
+            CarDetailResponceModel result = new()
+            {
+                Brand = ev.Brand,
+                Model = ev.Model,
+                HorsePowers = ev.HorsePowers,
+                Range = ev.Range,
+                PricePerDay = ev.PricePerDay,
+                Image = ev.Image,
+                Category = ev.Category
+            };
+            return Ok(result);
+
         }
     }
 }
-    /* [HttpGet("{id}")]
-     [ProducesResponseType(StatusCodes.Status200OK)]
-     [ProducesResponseType(StatusCodes.Status404NotFound)]
-     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-     public ActionResult<CarDetailResponceModel> Get(int id, [System.Web.Http.FromUri] int userId)
-     {
-
-         // Check if user exists
-        if (!_EVContext.Users.Where(u => u.Id == userId).Any())
-         {
-             return Unauthorized();
-         }
-         ElectricVehicle? ev = _EVContext.ElectricVehicles.Where(ev => ev.CarId == id).FirstOrDefault();
-         if (ev == null)
-         {
-             return NotFound();
-         }
-         CarDetailResponceModel result = new()
-         {
-             Brand = ev.Brand,
-             Model = ev.Model,
-             HorsePowers = ev.HorsePowers,
-             Range = ev.Range,
-             PricePerDay = ev.PricePerDay,
-             Image = ev.Image,
-             Category = ev.Category
-         };
-         return Ok(result);
-     } 
-
-     [HttpGet()]
-     [ProducesResponseType(StatusCodes.Status200OK)]
-     [ProducesResponseType(StatusCodes.Status404NotFound)]
-     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-     public ActionResult<ICollection<CarResponseModel>> GetAll([System.Web.Http.FromUri] int userId)
-     {
-         var vehicles = _EVContext.ElectricVehicles;
-         // Check if user exists
-         if (!_EVContext.Users.Where(u => u.Id == userId).Any())
-         {
-             return Unauthorized();
-         }
-
-         ICollection<CarResponseModel> models = new List<CarResponseModel>();
-         foreach (var vehicle in vehicles)
-         {
-             CarResponseModel newModel = new()
-             {
-                 Brand = vehicle.Brand,
-                 Model = vehicle.Model,
-                 Price = vehicle.PricePerDay,
-                 Image = vehicle.Image,
-                 Category = vehicle.Category
-             };
-             models.Add(newModel);
-         }
-         return Ok(models);
-     }*/
