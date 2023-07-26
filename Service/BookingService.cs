@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public interface IUser
+    public class BookingService : IBookingService
     {
+        public void Nothing()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

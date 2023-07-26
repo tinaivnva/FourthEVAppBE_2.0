@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Service;
 using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.API.Models.BookingModels;
 using TravelEasy.EV.API.Models.UserModels;
@@ -13,25 +14,27 @@ namespace TravelEasy.EV.API.Controllers
     public class BookingController : ControllerBase
     {
         private readonly ElectricVehiclesContext _EVContext;
-        public BookingController(ElectricVehiclesContext EVContext)
+        private readonly IUserService _userService;
+        public BookingController(ElectricVehiclesContext EVContext, IUserService userService)
         {
             _EVContext = EVContext;
+            _userService = userService;
         }
+        //users booked cars
         [HttpPut("book-a-car")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Booking([FromBody] BookingRequestModel model)
+        public IActionResult Booking([FromBody] BookingRequestModel model) // to fix
         {
-            if (!_EVContext.Users.Where(u => u.Id == userId).Any())
+            if (!_userService.checkIfUserExists(model.UserId))
             {
                 return Unauthorized();
             }
-            if (!_EVContext.Users.Where(u => u.Id == userId).Any())
-            {
-                return Unauthorized();
-            }
+            return Ok();
         }
+        //check if user & car exist; 
+        //
         /* [HttpPut("book-a-car")]
          [ProducesResponseType(StatusCodes.Status200OK)]
          [ProducesResponseType(StatusCodes.Status404NotFound)]
