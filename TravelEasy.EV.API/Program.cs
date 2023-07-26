@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Service;
 using TravelEasy.EV.DataLayer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); 
 builder.Services.AddDbContext<ElectricVehiclesContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("ElectricVehiclesContext")));
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IBookingService, BookingService>();
+
 
 var app = builder.Build();
 

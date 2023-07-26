@@ -17,6 +17,7 @@ namespace TravelEasy.EV.API.Controllers
         {
             _EVContext = EVContext;
         }
+        //users booked cars
         [HttpPut("book-a-car")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -27,11 +28,9 @@ namespace TravelEasy.EV.API.Controllers
             {
                 return Unauthorized();
             }
-            if (!_EVContext.Users.Where(u => u.Id == userId).Any())
-            {
-                return Unauthorized();
-            }
         }
+        //check if user & car exist; 
+        //
         /* [HttpPut("book-a-car")]
          [ProducesResponseType(StatusCodes.Status200OK)]
          [ProducesResponseType(StatusCodes.Status404NotFound)]

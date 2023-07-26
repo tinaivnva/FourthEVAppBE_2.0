@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelEasy.EV.API", "Travel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelEasy.EV.DataLayer", "TravelEasy.EV.DataLayer\TravelEasy.EV.DataLayer.csproj", "{7CD217D0-3CFA-47B4-8D21-11B9426953E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{76F84258-9B09-4230-BF7F-5BD22FC3A936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{76F84258-9B09-4230-BF7F-5BD22FC3A936}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

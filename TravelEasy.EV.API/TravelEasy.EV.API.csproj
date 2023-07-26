@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Service\Service.csproj" />
     <ProjectReference Include="..\TravelEasy.EV.DataLayer\TravelEasy.EV.DataLayer.csproj" />
   </ItemGroup>
 
