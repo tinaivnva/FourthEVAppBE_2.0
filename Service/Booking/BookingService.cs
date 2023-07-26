@@ -8,9 +8,6 @@ namespace Service.Booking
 {
     public class BookingService : IBookingService
     {
-        public void Nothing()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
