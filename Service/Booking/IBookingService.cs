@@ -10,7 +10,7 @@ namespace Service.Booking
 {
     public interface IBookingService
     {
-        //public void AddBooking(Booking booking);
+        public AddBooking(int booking);
         public bool CheckIfBookingExists();
         public void GetBookingByID(int bookingId);
         public void GetBookingByCarID(int bookingId);

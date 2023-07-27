@@ -15,11 +15,11 @@ namespace Service.Booking
             _EVContext = EVContext;
             _carsService = carsService;
         }
-        /*public void AddBooking(Booking booking)
+        public void AddBooking(Booking booking)
         {
             _EVContext.Booking.Add(booking);
             _EVContext.SaveChanges();
-        }*/
+        }
 
         public bool CheckIfBookingExists(int bookingId)
         {
