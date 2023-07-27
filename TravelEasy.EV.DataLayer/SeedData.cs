@@ -101,7 +101,7 @@ namespace TravelEasy.EV.DataLayer
                         Image = "2a9371e9381cba875104b1d67da9d7de.png",
                         CategoryId = 2
                     },
-                    new ElectricVehicle //
+                    new ElectricVehicle 
                     {
                         Brand = "Tesla",
                         HorsePowers = 110,

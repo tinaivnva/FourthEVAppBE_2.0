@@ -15,9 +15,9 @@ namespace Service.CarBooking
             _carsService = carsService;
         }
 
-        public void AddBooking(BookedCar booking)
+        public void AddBooking(BookedCar bookedCar)
         {
-            _EVContext.BookedCars.Add(booking);
+            _EVContext.BookedCars.Add(bookedCar);
             _EVContext.SaveChanges();
         }
 
@@ -28,32 +28,30 @@ namespace Service.CarBooking
 
         public BookedCar GetBookingByCarID(int carId)
         {
-            return _EVContext.BookedCars.Where(b => b.Id == carId).FirstOrDefault();
-        }
-
-        public ICollection<ElectricVehicle> GetAvailableVehicles()
-        {
-            throw new NotImplementedException();
-            /*ICollection<ElectricVehicle> availiableVehicles = new List<ElectricVehicle>();
-            var vehicles = _carsService.GetAll();
-            foreach (var vehicle in vehicles)
-            {
-                if (GetBookingByCarID(carId: (int)b.Id) != null)
-                {
-                    availiableVehicles.Add(vehicle);
-                }
-            }
-            return availiableVehicles;*/
+            return _EVContext.BookedCars.Where(b => b.CarId == carId).FirstOrDefault();
         }
 
         public ICollection<ElectricVehicle> GetBookedVehicles()
         {
-            throw new NotImplementedException();
+            ICollection<ElectricVehicle> bookedCars = new List<ElectricVehicle>();
+            foreach (var booking in _EVContext.BookedCars)
+            {
+                bookedCars.Add(_carsService.GetByID(booking.CarId));
+            }
+            return bookedCars;
         }
 
         public BookedCar GetBookingByID(int bookingId)
         {
-            throw new NotImplementedException();
+            return _EVContext.BookedCars.Where(b => b.Id == bookingId).FirstOrDefault();
         }
+
+        public ICollection<BookedCar> GetUserBookings(int userId)
+        {
+            var userBookings = _EVContext.BookedCars.Where(b => b.UsertId == userId);
+
+            return userBookings.ToList();
+        }
+
     }
 }

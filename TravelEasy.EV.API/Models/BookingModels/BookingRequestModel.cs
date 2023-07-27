@@ -4,5 +4,7 @@
     {
         public int UserId { get; set; }
         public int CarId { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
     }
 }
