@@ -12,20 +12,20 @@ using TravelEasy.EV.DataLayer;
 namespace TravelEasy.EV.DataLayer.Migrations
 {
     [DbContext(typeof(ElectricVehiclesContext))]
-    [Migration("20230726132908_addedCategory")]
-    partial class addedCategory
+    [Migration("20230727132702_UpdatdDb")]
+    partial class UpdatdDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.Booking", b =>
+            modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.BookedCar", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,29 +36,43 @@ namespace TravelEasy.EV.DataLayer.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ElectricVehicleCarId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ToDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UsertId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Booking");
+                    b.HasIndex("ElectricVehicleCarId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BookedCars");
                 });
 
             modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.Category", b =>
                 {
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasKey("CategoryName");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
@@ -74,9 +88,8 @@ namespace TravelEasy.EV.DataLayer.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<int>("HorsePowers")
                         .HasColumnType("int");
@@ -95,6 +108,8 @@ namespace TravelEasy.EV.DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CarId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("ElectricVehicles");
                 });
@@ -122,6 +137,36 @@ namespace TravelEasy.EV.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.BookedCar", b =>
+                {
+                    b.HasOne("TravelEasy.ElectricVehicles.DB.Models.ElectricVehicle", "ElectricVehicle")
+                        .WithMany()
+                        .HasForeignKey("ElectricVehicleCarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelEasy.ElectricVehicles.DB.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ElectricVehicle");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.ElectricVehicle", b =>
+                {
+                    b.HasOne("TravelEasy.ElectricVehicles.DB.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

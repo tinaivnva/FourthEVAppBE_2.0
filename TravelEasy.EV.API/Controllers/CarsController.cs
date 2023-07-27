@@ -79,7 +79,7 @@ namespace TravelEasy.EV.API.Controllers
                 Range = ev.Range,
                 PricePerDay = ev.PricePerDay,
                 Image = ev.Image,
-                Category = ev.Category
+                CategoryId = ev.CategoryId
             };
 
             return Ok(result);      

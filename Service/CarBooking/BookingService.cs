@@ -7,58 +7,51 @@ namespace Service.CarBooking
     public class BookingService : IBookingService
     {
         private readonly ICarsService _carsService;
-        private readonly IBookingService _bookingService;
         private readonly ElectricVehiclesContext _EVContext;
 
-        public BookingService(ElectricVehiclesContext EVContext, IBookingService bookingService, ICarsService carsService) 
+        public BookingService(ElectricVehiclesContext EVContext, ICarsService carsService) 
         {
             _EVContext = EVContext;
             _carsService = carsService;
         }
-        public void AddBooking(Booking booking)
-        {
-            _EVContext.Bookings.Add(booking);
-            _EVContext.SaveChanges();
-        }
 
-        public void AddBooking(int booking)
+        public void AddBooking(BookedCar booking)
         {
-            throw new NotImplementedException();
+            _EVContext.BookedCars.Add(booking);
+            _EVContext.SaveChanges();
         }
 
         public bool CheckIfBookingExists(int bookingId)
         {
-            return _EVContext.Bookings.Where(b => b.Id == bookingId).Any();
+            return _EVContext.BookedCars.Where(b => b.Id == bookingId).Any();
         }
 
-        public bool CheckIfBookingExists()
+        public BookedCar GetBookingByCarID(int carId)
         {
-            throw new NotImplementedException();
+            return _EVContext.BookedCars.Where(b => b.Id == carId).FirstOrDefault();
         }
 
         public ICollection<ElectricVehicle> GetAvailableVehicles()
         {
             throw new NotImplementedException();
+            /*ICollection<ElectricVehicle> availiableVehicles = new List<ElectricVehicle>();
+            var vehicles = _carsService.GetAll();
+            foreach (var vehicle in vehicles)
+            {
+                if (GetBookingByCarID(carId: (int)b.Id) != null)
+                {
+                    availiableVehicles.Add(vehicle);
+                }
+            }
+            return availiableVehicles;*/
         }
-
-        /*public ICollection<ElectricVehicle> GetAvailableVehicles()
-        {
-            ICollection<ElectricVehicle> availiableVehicles = new List<ElectricVehicle>();
-            var vehicles = _carsService
-            throw new NotImplementedException();
-        }*/
 
         public ICollection<ElectricVehicle> GetBookedVehicles()
         {
             throw new NotImplementedException();
         }
 
-        public void GetBookingByCarID(int bookingId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetBookingByID(int bookingId)
+        public BookedCar GetBookingByID(int bookingId)
         {
             throw new NotImplementedException();
         }

@@ -17,6 +17,33 @@ namespace TravelEasy.EV.DataLayer
                     throw new ArgumentNullException("Null ElectricVehiclesContext");
                 }
 
+                if (context.Categories.Any()) 
+                {
+                    return;
+                }
+                context.Categories.AddRange(
+                    new Category
+                    {
+                        Id = 1,
+                        CategoryName = "Recently added"
+                    },
+                   new Category
+                   {
+                       Id = 2,
+                       CategoryName = "Best range"
+                   },
+                   new Category
+                   {
+                       Id = 3,
+                       CategoryName = "Summer fit"
+                   },
+                   new Category
+                   {
+                       Id = 4,
+                       CategoryName = "Most rented"
+                   }
+                   );
+                context.SaveChanges();
                 // Look for any EV.
                 if (context.ElectricVehicles.Any())
                 {
@@ -32,7 +59,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 252,
                         PricePerDay = 47,
                         Image = "28fa30d1a3441f41a1b04dfb5fe5bea6.png",
-                        Category = "recently-added"
+                        CategoryId = 1
                     },
                     new ElectricVehicle
                     {
@@ -42,7 +69,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 382,
                         PricePerDay = 112,
                         Image = "813bd72757481e107ee6dcf44c5776f4.png",
-                        Category = "recently-added"
+                        CategoryId = 1
                     },
                     new ElectricVehicle
                     {
@@ -52,7 +79,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 390,
                         PricePerDay = 94,
                         Image = "f7299783392a5924b84df5b0541c9e37.png",
-                        Category = "recently-added"
+                        CategoryId = 1
                     },
                     new ElectricVehicle
                     {
@@ -62,7 +89,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 470,
                         PricePerDay = 91,
                         Image = "6b1fc26c04412bdf6cbabe51379f4594.png",
-                        Category = "recently-added"
+                        CategoryId = 1
                     },
                     new ElectricVehicle
                     {
@@ -72,7 +99,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 520,
                         PricePerDay = 50,
                         Image = "2a9371e9381cba875104b1d67da9d7de.png",
-                        Category = "best-range"
+                        CategoryId = 2
                     },
                     new ElectricVehicle //
                     {
@@ -82,7 +109,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 670,
                         PricePerDay = 66,
                         Image = "28fa30d1a3441f41a1b04dfb5fe5bea6.png",
-                        Category = "best-range"
+                        CategoryId = 2
                     },
                     new ElectricVehicle
                     {
@@ -92,7 +119,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 632,
                         PricePerDay = 67,
                         Image = "332d75cbbd2e5b975a79beafd30e1493.png",
-                        Category = "best-range"
+                        CategoryId = 2
                     }
                     ,
                     new ElectricVehicle
@@ -103,7 +130,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 570,
                         PricePerDay = 90,
                         Image = "39e0cf1d23c2fe8aff669300e27936da.png",
-                        Category = "best-range"
+                        CategoryId = 2
                     }
                     ,
                     new ElectricVehicle
@@ -114,7 +141,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 252,
                         PricePerDay = 77,
                         Image = "a71599bb8d2770ac3a87afd39362051a.png",
-                        Category = "summer-fit"
+                        CategoryId = 3
                     },
                     new ElectricVehicle
                     {
@@ -124,7 +151,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 382,
                         PricePerDay = 112,
                         Image = "c36834cce48dde330e08c03824ac4978.png",
-                        Category = "summer-fit"
+                        CategoryId = 3
                     },
                     new ElectricVehicle
                     {
@@ -134,7 +161,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 390,
                         PricePerDay = 98,
                         Image = "d59c6073409c091cf844855d354872b1.png",
-                        Category = "most-rented"
+                        CategoryId = 4
                     },
                     new ElectricVehicle
                     {
@@ -144,7 +171,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 474,
                         PricePerDay = 100,
                         Image = "2e673b8641b37bd48ecd810eb952e5c6.png",
-                        Category = "most-rented"
+                        CategoryId = 4
                     },
                     new ElectricVehicle
                     {
@@ -154,7 +181,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 320,
                         PricePerDay = 76,
                         Image = "a506abeecbc3cb49084f74fedb557447.png",
-                        Category = "most-rented"
+                        CategoryId = 4
                     },
                     new ElectricVehicle
                     {
@@ -164,7 +191,7 @@ namespace TravelEasy.EV.DataLayer
                         Range = 376,
                         PricePerDay = 56,
                         Image = "5d84045775c10d49cd7c9d5ac7ec9e98.png",
-                        Category = "most-rented"
+                        CategoryId = 4
                     }
                     );
                     context.SaveChanges();
