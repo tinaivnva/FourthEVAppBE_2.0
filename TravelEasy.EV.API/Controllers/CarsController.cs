@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TravelEasy.ElectricVehicles.DB.Models;
 using Service.Cars;
-using Service.Cars.Interfaces;
 using TravelEasy.EV.API.Models.CarModels;
 using Service.user;
+using TravelEasy.EV.Services.Cars;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

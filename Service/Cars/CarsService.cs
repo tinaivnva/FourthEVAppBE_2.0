@@ -1,6 +1,6 @@
-﻿using Service.Cars.Interfaces;
-using TravelEasy.ElectricVehicles.DB.Models;
+﻿using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.DataLayer;
+using TravelEasy.EV.Services.Cars;
 
 namespace Service.Cars
 {

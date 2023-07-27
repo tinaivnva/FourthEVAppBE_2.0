@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TravelEasy.EV.DataLayer;
-using TravelEasy.ElectricVehicles.DB.Models;
+﻿using TravelEasy.ElectricVehicles.DB.Models;
 
-namespace Service.Booking
+namespace Service.CarBooking
 {
     public interface IBookingService
     {
-        public AddBooking(int booking);
+        public void AddBooking(int booking);
         public bool CheckIfBookingExists();
         public void GetBookingByID(int bookingId);
         public void GetBookingByCarID(int bookingId);

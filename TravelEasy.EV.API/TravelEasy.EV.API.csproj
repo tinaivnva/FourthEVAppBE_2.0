@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Service\Service.csproj" />
+    <ProjectReference Include="..\Service\TravelEasy.EV.Services.csproj" />
     <ProjectReference Include="..\TravelEasy.EV.DataLayer\TravelEasy.EV.DataLayer.csproj" />
   </ItemGroup>
 

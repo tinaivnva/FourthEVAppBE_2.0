@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using Service.Booking;
+using Service.CarBooking;
 using Service.Cars;
-using Service.Cars.Interfaces;
 using Service.user;
 using TravelEasy.EV.DataLayer;
+using TravelEasy.EV.Services.Cars;
 
 var builder = WebApplication.CreateBuilder(args);
 

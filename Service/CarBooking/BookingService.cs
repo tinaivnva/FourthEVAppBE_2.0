@@ -1,8 +1,8 @@
 ﻿using TravelEasy.EV.DataLayer;
 using TravelEasy.ElectricVehicles.DB.Models;
-using Service.Cars.Interfaces;
+using TravelEasy.EV.Services.Cars;
 
-namespace Service.Booking
+namespace Service.CarBooking
 {
     public class BookingService : IBookingService
     {
@@ -17,13 +17,18 @@ namespace Service.Booking
         }
         public void AddBooking(Booking booking)
         {
-            _EVContext.Booking.Add(booking);
+            _EVContext.Bookings.Add(booking);
             _EVContext.SaveChanges();
+        }
+
+        public void AddBooking(int booking)
+        {
+            throw new NotImplementedException();
         }
 
         public bool CheckIfBookingExists(int bookingId)
         {
-            return _EVContext.Booking.Where(b => b.Id == bookingId).Any();
+            return _EVContext.Bookings.Where(b => b.Id == bookingId).Any();
         }
 
         public bool CheckIfBookingExists()

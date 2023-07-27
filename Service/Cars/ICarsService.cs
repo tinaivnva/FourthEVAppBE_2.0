@@ -1,6 +1,6 @@
 ﻿using TravelEasy.ElectricVehicles.DB.Models;
 
-namespace Service.Cars.Interfaces
+namespace TravelEasy.EV.Services.Cars
 {
     public interface ICarsService
     {
