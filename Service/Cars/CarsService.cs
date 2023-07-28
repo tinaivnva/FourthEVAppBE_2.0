@@ -1,4 +1,5 @@
-﻿using TravelEasy.ElectricVehicles.DB.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TravelEasy.ElectricVehicles.DB.Models;
 using TravelEasy.EV.DataLayer;
 using TravelEasy.EV.Services.Cars;
 
@@ -14,12 +15,14 @@ namespace Service.Cars
         }
         public ICollection<ElectricVehicle> GetAll()
         {
-            return _EVContext.ElectricVehicles.ToList();
+            return _EVContext.ElectricVehicles
+                .Include(x => x.Category)
+                .ToList();
         }
 
-        ElectricVehicle ICarsService.GetByID(int CarId)
+        public ElectricVehicle GetByID(int CarId)
         {
-            return _EVContext.ElectricVehicles.ToList()[CarId];
+            return _EVContext.ElectricVehicles.Find(CarId);
         }
     }
 }

@@ -30,10 +30,7 @@ namespace TravelEasy.EV.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ElectricVehicleCarId")
+                    b.Property<int>("ElectricVehicleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FromDate")
@@ -45,12 +42,9 @@ namespace TravelEasy.EV.DataLayer.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsertId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ElectricVehicleCarId");
+                    b.HasIndex("ElectricVehicleId");
 
                     b.HasIndex("UserId");
 
@@ -76,11 +70,11 @@ namespace TravelEasy.EV.DataLayer.Migrations
 
             modelBuilder.Entity("TravelEasy.ElectricVehicles.DB.Models.ElectricVehicle", b =>
                 {
-                    b.Property<int>("CarId")
+                    b.Property<int>("ElectricVehicleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ElectricVehicleId"));
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
@@ -104,7 +98,7 @@ namespace TravelEasy.EV.DataLayer.Migrations
                     b.Property<int>("Range")
                         .HasColumnType("int");
 
-                    b.HasKey("CarId");
+                    b.HasKey("ElectricVehicleId");
 
                     b.HasIndex("CategoryId");
 
@@ -140,7 +134,7 @@ namespace TravelEasy.EV.DataLayer.Migrations
                 {
                     b.HasOne("TravelEasy.ElectricVehicles.DB.Models.ElectricVehicle", "ElectricVehicle")
                         .WithMany()
-                        .HasForeignKey("ElectricVehicleCarId")
+                        .HasForeignKey("ElectricVehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

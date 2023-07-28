@@ -23,7 +23,7 @@ namespace TravelEasy.EV.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<CarResponseModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult CarResponseModel(int userId)
@@ -33,18 +33,18 @@ namespace TravelEasy.EV.API.Controllers
                 return Unauthorized();
             }
 
-            var models = new List<ElectricVehicle>();
+            var models = new List<CarResponseModel>();
             var vehicles = _carsService.GetAll();
 
             foreach (var vehicle in vehicles)
             {
-                ElectricVehicle newModel = new()
+                CarResponseModel newModel = new()
                 {
                     Brand = vehicle.Brand,
                     Model = vehicle.Model,
-                    PricePerDay = vehicle.PricePerDay,
                     Image = vehicle.Image,
-                    Category = vehicle.Category,
+                    Category =vehicle.Category.CategoryName,
+                    Price = vehicle.PricePerDay
                 };
                 models.Add(newModel);
             }

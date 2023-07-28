@@ -28,7 +28,7 @@ namespace Service.CarBooking
 
         public BookedCar GetBookingByCarID(int carId)
         {
-            return _EVContext.BookedCars.Where(b => b.CarId == carId).FirstOrDefault();
+            return _EVContext.BookedCars.Where(b => b.ElectricVehicleId == carId).FirstOrDefault();
         }
 
         public ICollection<ElectricVehicle> GetBookedVehicles()
@@ -36,7 +36,7 @@ namespace Service.CarBooking
             ICollection<ElectricVehicle> bookedCars = new List<ElectricVehicle>();
             foreach (var booking in _EVContext.BookedCars)
             {
-                bookedCars.Add(_carsService.GetByID(booking.CarId));
+                bookedCars.Add(_carsService.GetByID(booking.ElectricVehicleId));
             }
             return bookedCars;
         }
@@ -48,7 +48,7 @@ namespace Service.CarBooking
 
         public ICollection<BookedCar> GetUserBookings(int userId)
         {
-            var userBookings = _EVContext.BookedCars.Where(b => b.UsertId == userId);
+            var userBookings = _EVContext.BookedCars.Where(b => b.UserId == userId);
 
             return userBookings.ToList();
         }

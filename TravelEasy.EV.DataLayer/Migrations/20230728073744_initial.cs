@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelEasy.EV.DataLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdatdDb : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,7 +43,7 @@ namespace TravelEasy.EV.DataLayer.Migrations
                 name: "ElectricVehicles",
                 columns: table => new
                 {
-                    CarId = table.Column<int>(type: "int", nullable: false)
+                    ElectricVehicleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -55,7 +55,7 @@ namespace TravelEasy.EV.DataLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ElectricVehicles", x => x.CarId);
+                    table.PrimaryKey("PK_ElectricVehicles", x => x.ElectricVehicleId);
                     table.ForeignKey(
                         name: "FK_ElectricVehicles_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -70,21 +70,19 @@ namespace TravelEasy.EV.DataLayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UsertId = table.Column<int>(type: "int", nullable: false),
-                    CarId = table.Column<int>(type: "int", nullable: false),
-                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ElectricVehicleCarId = table.Column<int>(type: "int", nullable: false)
+                    ElectricVehicleId = table.Column<int>(type: "int", nullable: false),
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BookedCars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookedCars_ElectricVehicles_ElectricVehicleCarId",
-                        column: x => x.ElectricVehicleCarId,
+                        name: "FK_BookedCars_ElectricVehicles_ElectricVehicleId",
+                        column: x => x.ElectricVehicleId,
                         principalTable: "ElectricVehicles",
-                        principalColumn: "CarId",
+                        principalColumn: "ElectricVehicleId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookedCars_Users_UserId",
@@ -95,9 +93,9 @@ namespace TravelEasy.EV.DataLayer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookedCars_ElectricVehicleCarId",
+                name: "IX_BookedCars_ElectricVehicleId",
                 table: "BookedCars",
-                column: "ElectricVehicleCarId");
+                column: "ElectricVehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookedCars_UserId",

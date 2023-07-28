@@ -24,22 +24,18 @@ namespace TravelEasy.EV.DataLayer
                 context.Categories.AddRange(
                     new Category
                     {
-                        Id = 1,
                         CategoryName = "Recently added"
                     },
                    new Category
                    {
-                       Id = 2,
                        CategoryName = "Best range"
                    },
                    new Category
                    {
-                       Id = 3,
                        CategoryName = "Summer fit"
                    },
                    new Category
                    {
-                       Id = 4,
                        CategoryName = "Most rented"
                    }
                    );

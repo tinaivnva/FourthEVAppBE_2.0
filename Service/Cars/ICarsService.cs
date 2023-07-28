@@ -4,7 +4,7 @@ namespace TravelEasy.EV.Services.Cars
 {
     public interface ICarsService
     {
-        ICollection<ElectricVehicle> GetAll();
-        ElectricVehicle GetByID(int CarId);
+        public ICollection<ElectricVehicle> GetAll();
+        public ElectricVehicle GetByID(int CarId);
     }
 }
